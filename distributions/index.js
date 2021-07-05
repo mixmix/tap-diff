@@ -36,9 +36,32 @@ var _jsondiffpatch = require('jsondiffpatch');
 
 var _jsondiffpatch2 = _interopRequireDefault(_jsondiffpatch);
 
+var Stringify = require('json-stable-stringify');
+
+var stringify = function stringify(obj, _) {
+  var space = arguments.length <= 2 || arguments[2] === undefined ? 2 : arguments[2];
+  return Stringify(obj, { space: space });
+};
+
 var INDENT = '  ';
 var FIG_TICK = _figures2['default'].tick;
 var FIG_CROSS = _figures2['default'].cross;
+
+var toString = function toString(arg) {
+  return Object.prototype.toString.call(arg).slice(8, -1).toLowerCase();
+};
+
+var JSONize = function JSONize(str) {
+  return str
+  // wrap keys without quote with valid double quote
+  .replace(/([\$\w]+)\s*:/g, function (_, $1) {
+    return '"' + $1 + '":';
+  })
+  // replacing single quote wrapped ones to double quote
+  .replace(/'([^']+)'/g, function (_, $1) {
+    return '"' + $1 + '"';
+  });
+};
 
 var createReporter = function createReporter() {
   var output = (0, _through22['default'])();
@@ -73,22 +96,6 @@ var createReporter = function createReporter() {
     println(_chalk2['default'].green(FIG_TICK) + '  ' + _chalk2['default'].dim(name), 2);
   };
 
-  var toString = function toString(arg) {
-    return Object.prototype.toString.call(arg).slice(8, -1).toLowerCase();
-  };
-
-  var JSONize = function JSONize(str) {
-    return str
-    // wrap keys without quote with valid double quote
-    .replace(/([\$\w]+)\s*:/g, function (_, $1) {
-      return '"' + $1 + '":';
-    })
-    // replacing single quote wrapped ones to double quote
-    .replace(/'([^']+)'/g, function (_, $1) {
-      return '"' + $1 + '"';
-    });
-  };
-
   var handleAssertFailure = function handleAssertFailure(assert) {
     var name = assert.name;
 
@@ -113,31 +120,35 @@ var createReporter = function createReporter() {
     var actual = _assert$diag.actual;
     var expected = _assert$diag.expected;
 
-    var expected_type = toString(expected);
+    var expected_type = toString(expected, 2);
 
     if (expected_type !== 'array') {
       try {
         // the assert event only returns strings which is broken so this
         // handles converting strings into objects
         if (expected.indexOf('{') > -1) {
-          actual = JSON.stringify(JSON.parse(JSONize(actual)), null, 2);
-          expected = JSON.stringify(JSON.parse(JSONize(expected)), null, 2);
+          actual = stringify(JSON.parse(JSONize(actual)), null, 2);
+          expected = stringify(JSON.parse(JSONize(expected)), null, 2);
+          println('here', 4);
         }
       } catch (e) {
         try {
-          actual = JSON.stringify(eval('(' + actual + ')'), null, 2);
-          expected = JSON.stringify(eval('(' + expected + ')'), null, 2);
+          actual = stringify(eval('(' + actual + ')'), null, 2);
+          expected = stringify(eval('(' + expected + ')'), null, 2);
         } catch (e) {
           // do nothing because it wasn't a valid json object
         }
       }
 
       expected_type = toString(expected);
+      println('expected_type ' + expected_type, 4);
     }
 
     println(_chalk2['default'].red(FIG_CROSS) + '  ' + _chalk2['default'].red(name) + ' at ' + _chalk2['default'].magenta(at), 2);
 
     if (expected_type === 'object') {
+      // TODO check if this code is ever reached
+      // ad failed_test_number is not defined!
       var delta = _jsondiffpatch2['default'].diff(actual[failed_test_number], expected[failed_test_number]);
       var _output = _jsondiffpatch2['default'].formatters.console.format(delta);
       println(_output, 4);

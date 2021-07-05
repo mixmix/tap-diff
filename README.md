@@ -1,8 +1,7 @@
-# tap-diff
-
-[![npm version](https://badge.fury.io/js/tap-diff.svg)](http://badge.fury.io/js/tap-diff)
+# tap-diff2
 
 The most human-friendly [TAP reporter](https://github.com/substack/tape#pretty-reporters).
+_this is a fork of `tap-diff` which makes object diffs clearer by deterministically sorting before diff_
 
 ![Screenshot](screenshot1.png)
 

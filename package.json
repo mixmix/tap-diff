@@ -1,5 +1,5 @@
 {
-  "name": "tap-diff",
+  "name": "tap-diff2",
   "version": "0.1.1",
   "description": "The most human-friendly TAP reporter",
   "main": "./distributions/index.js",
@@ -10,13 +10,14 @@
     "babel": "babel ./sources --out-dir ./distributions",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "axross <kou@axross.org> (http://axross.me/)",
+  "author": "mixmix",
   "license": "MIT",
   "dependencies": {
     "chalk": "^1.1.1",
     "diff": "^2.2.1",
     "duplexer": "^0.1.1",
     "figures": "^1.4.0",
+    "json-stable-stringify": "^1.0.1",
     "jsondiffpatch": "^0.1.41",
     "pretty-ms": "^2.1.0",
     "tap-parser": "^1.2.2",
@@ -27,12 +28,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/axross/tap-diff.git"
+    "url": "git+https://github.com/mixmix/tap-diff2.git"
   },
   "bugs": {
-    "url": "https://github.com/axross/tap-diff/issues"
+    "url": "https://github.com/mixmix/tap-diff2/issues"
   },
-  "homepage": "https://github.com/axross/tap-diff#readme",
+  "homepage": "https://github.com/mixmix/tap-diff2#readme",
   "keywords": [
     "tap",
     "tape",
