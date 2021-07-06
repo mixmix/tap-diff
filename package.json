@@ -4,7 +4,7 @@
   "description": "The most human-friendly TAP reporter",
   "main": "./distributions/index.js",
   "bin": {
-    "tap-diff": "./distributions/cli.js"
+    "tap-diff2": "./distributions/cli.js"
   },
   "scripts": {
     "babel": "babel ./sources --out-dir ./distributions",
