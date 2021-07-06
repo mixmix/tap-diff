@@ -7,7 +7,7 @@
     "tap-diff2": "./distributions/cli.js"
   },
   "scripts": {
-    "babel": "babel ./sources --out-dir ./distributions",
+    "build": "babel sources -d distributions",
     "test": "echo \"Error: no test specified\" && npm run lint",
     "lint": "standard --fix sources"
   },
@@ -15,7 +15,7 @@
   "license": "MIT",
   "dependencies": {
     "chalk": "^1.1.1",
-    "diff": "^2.2.1",
+    "diff": "^5.0.0",
     "duplexer": "^0.1.1",
     "figures": "^1.4.0",
     "json-stable-stringify": "^1.0.1",
@@ -25,7 +25,9 @@
     "through2": "^2.0.0"
   },
   "devDependencies": {
-    "babel": "^5.8.34",
+    "@babel/cli": "^7.14.5",
+    "@babel/core": "^7.14.6",
+    "@babel/preset-env": "^7.14.7",
     "standard": "^16.0.3"
   },
   "repository": {
