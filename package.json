@@ -8,7 +8,8 @@
   },
   "scripts": {
     "babel": "babel ./sources --out-dir ./distributions",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && npm run lint",
+    "lint": "standard --fix sources"
   },
   "author": "mixmix",
   "license": "MIT",
@@ -24,7 +25,8 @@
     "through2": "^2.0.0"
   },
   "devDependencies": {
-    "babel": "^5.8.34"
+    "babel": "^5.8.34",
+    "standard": "^16.0.3"
   },
   "repository": {
     "type": "git",

@@ -73,16 +73,15 @@ const createReporter = () => {
       expected
     } = assert.diag
 
-    let expected_type = toString(expected, 2)
+    let expectedType = toString(expected, 2)
 
-    if (expected_type !== 'array') {
+    if (expectedType !== 'array') {
       try {
         // the assert event only returns strings which is broken so this
         // handles converting strings into objects
         if (expected.indexOf('{') > -1) {
           actual = stringify(JSON.parse(JSONize(actual)), null, 2)
           expected = stringify(JSON.parse(JSONize(expected)), null, 2)
-          println('here', 4)
         }
       } catch (e) {
         try {
@@ -93,19 +92,18 @@ const createReporter = () => {
         }
       }
 
-      expected_type = toString(expected)
-      println('expected_type ' + expected_type, 4)
+      expectedType = toString(expected)
     }
 
     println(`${chalk.red(FIG_CROSS)}  ${chalk.red(name)} at ${chalk.magenta(at)}`, 2)
 
-    if (expected_type === 'object') {
+    if (expectedType === 'object') {
       // TODO check if this code is ever reached
       // ad failed_test_number is not defined!
       const delta = jsondiffpatch.diff(actual[failed_test_number], expected[failed_test_number])
       const output = jsondiffpatch.formatters.console.format(delta)
       println(output, 4)
-    } else if (expected_type === 'array') {
+    } else if (expectedType === 'array') {
       const compared = diffJson(actual, expected)
         .map(writeDiff)
         .join('')
@@ -113,7 +111,7 @@ const createReporter = () => {
       println(compared, 4)
     } else if (expected === 'undefined' && actual === 'undefined') {
       ;
-    } else if (expected_type === 'string') {
+    } else if (expectedType === 'string') {
       const compared = diffWords(actual, expected)
         .map(writeDiff)
         .join('')
