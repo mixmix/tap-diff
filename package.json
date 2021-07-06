@@ -1,6 +1,6 @@
 {
   "name": "tap-diff2",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "The most human-friendly TAP reporter",
   "main": "./distributions/index.js",
   "bin": {
